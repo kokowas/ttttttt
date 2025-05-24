@@ -18,20 +18,24 @@
             padding: 20px;
             direction: rtl;
             background-color: #f4f4f4;
+            margin: 0; /* Remove default browser margin */
         }
 
         h1 {
+            font-size: 2.2em; /* Base H1 size */
             color: #333;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .bismillah-container {
-            text-align: center; /* For centering the Bismillah */
-            margin-bottom: 0.5em; /* Space below Bismillah */
+            text-align: center;
+            margin-bottom: 0.5em;
         }
 
         #sentence {
-            font-size: 30px;
-            line-height: 2.5; /* Increased slightly for inline-block padding */
+            font-size: 30px; /* Base font size for desktop */
+            line-height: 2.5;
             max-width: 800px;
             margin: 20px auto;
             text-align: right;
@@ -41,29 +45,24 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* Styling for individual words that will be highlighted */
         #sentence span[data-time] {
-            display: inline-block; /* Key change for stable layout */
-            padding: 1px 3px;     /* Consistent padding for all states */
-            margin: 0 1px;        /* Optional: small margin between words */
-            border-radius: 3px;   /* Consistent border-radius */
-            vertical-align: baseline; /* Good for aligning inline-block elements */
-            transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out; /* Smoother transition */
-            cursor: pointer; /* Indicate they are clickable */
+            display: inline-block;
+            padding: 1px 3px;
+            margin: 0 1px;
+            border-radius: 3px;
+            vertical-align: baseline;
+            transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+            cursor: pointer;
         }
 
-        /* Currently spoken word */
         .highlight {
-            background-color: #00ff84; /* Bright green */
-            color: #000; /* Black text on bright green */
-            /* Padding and border-radius are inherited from #sentence span[data-time] */
+            background-color: #00ff84;
+            color: #000;
         }
 
-        /* Words that have already been read */
         .read {
-            background-color: #c8f7dc; /* Lighter green */
-            color: #333; /* Darker gray text on light green */
-            /* Padding and border-radius are inherited from #sentence span[data-time] */
+            background-color: #c8f7dc;
+            color: #333;
         }
 
         .controls button {
@@ -85,10 +84,74 @@
 
         .ayah-number {
             color: #007BFF;
-            font-size: 0.8em;
+            font-size: 0.8em; /* Base size relative to #sentence font-size */
             margin: 0 5px;
-            display: inline; /* Keep ayah numbers flowing normally */
+            display: inline;
         }
+
+        /* --- Responsive Adjustments --- */
+
+        /* For tablets and larger phones */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+            #sentence {
+                font-size: 26px; /* Reduce font size */
+                line-height: 2.4; /* Adjust line height if needed */
+                padding: 12px;
+            }
+            .controls button {
+                font-size: 24px;
+                padding: 8px 16px;
+            }
+            #sentence span[data-time] {
+                padding: 1px 2px; /* Slightly smaller padding for words */
+            }
+            .ayah-number {
+                font-size: 0.75em;
+            }
+        }
+
+        /* For smaller phones */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.7em;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            #sentence {
+                font-size: 22px; /* Further reduce font size */
+                line-height: 2.3; /* Adjust line height */
+                padding: 10px;
+                 margin: 10px auto;
+            }
+            .controls {
+                margin-top: 15px;
+            }
+            .controls button {
+                font-size: 20px;
+                padding: 7px 14px;
+                min-width: 50px; /* Allow buttons to be a bit smaller */
+            }
+            #sentence span[data-time] {
+                padding: 1px 1px; /* Minimal padding for words */
+                margin: 0; /* Can remove margin if space is very tight */
+            }
+            .ayah-number {
+                font-size: 0.7em;
+                margin: 0 3px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -101,7 +164,7 @@
     </div>
 
     <div id="sentence">
-        <div class="bismillah-container"> 
+        <div class="bismillah-container">
             <span data-time="0.79">بِسْمِ</span>
             <span data-time="1.17">اللَّهِ</span>
             <span data-time="1.87">الرَّحْمَٰنِ</span>
@@ -225,7 +288,7 @@
                 playPauseButton.textContent = "🔄";
                 audioWasEnded = true;
                 words.forEach(w => {
-                    if(parseFloat(w.dataset.time) <= audio.currentTime) {
+                    if(w.hasAttribute('data-time') && parseFloat(w.dataset.time) <= audio.currentTime) {
                         w.classList.add('read');
                         w.classList.remove('highlight');
                     }
