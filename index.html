@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سورة الزلزلة - مُزامنة النص مع الصوت</title>
+    <style>
+        @font-face {
+            font-family: 'HafsFont';
+            src: url('conv_original-hafs.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'HafsFont', Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            direction: rtl;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .bismillah-container {
+            text-align: center; /* For centering the Bismillah */
+            margin-bottom: 0.5em; /* Space below Bismillah */
+        }
+
+        #sentence {
+            font-size: 30px;
+            line-height: 2.5; /* Increased slightly for inline-block padding */
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: right;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Styling for individual words that will be highlighted */
+        #sentence span[data-time] {
+            display: inline-block; /* Key change for stable layout */
+            padding: 1px 3px;     /* Consistent padding for all states */
+            margin: 0 1px;        /* Optional: small margin between words */
+            border-radius: 3px;   /* Consistent border-radius */
+            vertical-align: baseline; /* Good for aligning inline-block elements */
+            transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out; /* Smoother transition */
+            cursor: pointer; /* Indicate they are clickable */
+        }
+
+        /* Currently spoken word */
+        .highlight {
+            background-color: #00ff84; /* Bright green */
+            color: #000; /* Black text on bright green */
+            /* Padding and border-radius are inherited from #sentence span[data-time] */
+        }
+
+        /* Words that have already been read */
+        .read {
+            background-color: #c8f7dc; /* Lighter green */
+            color: #333; /* Darker gray text on light green */
+            /* Padding and border-radius are inherited from #sentence span[data-time] */
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            font-size: 28px;
+            cursor: pointer;
+            border: none;
+            background: #007BFF;
+            color: white;
+            border-radius: 10px;
+            margin: 10px 5px;
+            min-width: 60px;
+            line-height: 1;
+            transition: background-color 0.3s ease;
+        }
+        .controls button:hover {
+            background: #0056b3;
+        }
+
+        .ayah-number {
+            color: #007BFF;
+            font-size: 0.8em;
+            margin: 0 5px;
+            display: inline; /* Keep ayah numbers flowing normally */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>سورة الزلزلة</h1>
+    <audio id="audioPlayer" src="099.mp3"></audio> 
+
+    <div class="controls">
+        <button id="playPauseButton" onclick="toggleAudio()">▶️</button>
+    </div>
+
+    <div id="sentence">
+        <div class="bismillah-container"> 
+            <span data-time="0.79">بِسْمِ</span>
+            <span data-time="1.17">اللَّهِ</span>
+            <span data-time="1.87">الرَّحْمَٰنِ</span>
+            <span data-time="2.93">الرَّحِيمِ</span>
+        </div>
+        <span data-time="6.59">إِذَا</span>
+        <span data-time="7.22">زُلْزِلَتِ</span>
+        <span data-time="7.99">الْأَرْضُ</span>
+        <span data-time="8.79">زِلْزَالَهَا</span><span class="ayah-number">۝١</span>
+        <span data-time="11.72">وَأَخْرَجَتِ</span>
+        <span data-time="12.71">الْأَرْضُ</span>
+        <span data-time="13.62">أَثْقَالَهَا</span><span class="ayah-number">۝٢</span>
+        <span data-time="16.28">وَقَالَ</span>
+        <span data-time="17.23">الْإِنسَانُ</span>
+        <span data-time="19.71">مَا</span>
+        <span data-time="20.18">لَهَا</span><span class="ayah-number">۝٣</span>
+        <span data-time="21.89">يَوْمَئِذٍ</span>
+        <span data-time="23.62">تُحَدِّثُ</span>
+        <span data-time="24.89">أَخْبَارَهَا</span><span class="ayah-number">۝٤</span>
+        <span data-time="27.69">بِأَنَّ</span>
+        <span data-time="28.88">رَبَّكَ</span>
+        <span data-time="30.21">أَوْحَىٰ</span>
+        <span data-time="31.18">لَهَا</span><span class="ayah-number">۝٥</span>
+        <span data-time="32.66">يَوْمَئِذٍ</span>
+        <span data-time="34.35">يَصْدُرُ</span>
+        <span data-time="35.54">النَّاسُ</span>
+        <span data-time="36.99">أَشْتَاتًا</span>
+        <span data-time="38.39">لِيُرَوْا</span>
+        <span data-time="39.50">أَعْمَالَهُمْ</span><span class="ayah-number">۝٦</span>
+        <span data-time="41.76">فَمَن</span>
+        <span data-time="42.48">يَعْمَلْ</span>
+        <span data-time="43.48">مِثْقَالَ</span>
+        <span data-time="44.49">ذَرَّةٍ</span>
+        <span data-time="45.69">خَيْرًا</span>
+        <span data-time="47.04">يَرَهُ</span><span class="ayah-number">۝٧</span>
+        <span data-time="49.31">وَمَن</span>
+        <span data-time="50.08">يَعْمَلْ</span>
+        <span data-time="51.26">مِثْقَالَ</span>
+        <span data-time="52.39">ذَرَّةٍ</span>
+        <span data-time="54.02">شَرًّا</span>
+        <span data-time="56.18">يَرَهُ</span><span class="ayah-number">۝٨</span>
+    </div>
+
+<script>
+    const audio = document.getElementById("audioPlayer");
+    const playPauseButton = document.getElementById("playPauseButton");
+    const sentenceContainer = document.getElementById("sentence");
+    const words = sentenceContainer.querySelectorAll("span[data-time]");
+    let isPaused = false;
+    let audioWasEnded = false;
+
+    function resetHighlights() {
+        words.forEach(word => {
+            word.classList.remove("highlight");
+            word.classList.remove("read");
+        });
+        audioWasEnded = false;
+    }
+
+    function toggleAudio() {
+        if (audioWasEnded) {
+            resetHighlights();
+            audio.currentTime = 0;
+        }
+
+        if (audio.paused || audio.ended) {
+            if (audio.ended) {
+                audio.currentTime = 0;
+                resetHighlights();
+            }
+            audio.play();
+            isPaused = false;
+            playPauseButton.textContent = "⏸️";
+        } else {
+            audio.pause();
+            isPaused = true;
+            playPauseButton.textContent = "▶️";
+        }
+    }
+
+    function highlightWords() {
+        audio.ontimeupdate = () => {
+            if (isPaused || audioWasEnded) return;
+
+            const currentTime = audio.currentTime;
+
+            words.forEach((word, index) => {
+                let wordTime = parseFloat(word.dataset.time);
+                let endTime;
+                let nextWordTime = Infinity;
+
+                for (let i = index + 1; i < words.length; i++) {
+                    if (words[i].hasAttribute('data-time')) {
+                        nextWordTime = parseFloat(words[i].dataset.time);
+                        break;
+                    }
+                }
+
+                if (nextWordTime !== Infinity) {
+                    endTime = nextWordTime;
+                } else {
+                    endTime = wordTime + 1.0;
+                    if (audio.duration && !isNaN(audio.duration)) {
+                        endTime = audio.duration;
+                    }
+                }
+
+                if (currentTime >= wordTime && currentTime < endTime) {
+                    word.classList.add("highlight");
+                    word.classList.remove("read");
+                } else if (currentTime >= endTime) {
+                    word.classList.add("read");
+                    word.classList.remove("highlight");
+                } else {
+                    word.classList.remove("highlight");
+                    word.classList.remove("read");
+                }
+            });
+
+            if (!audio.ended && audio.currentTime >= audio.duration - 0.1 && audio.duration > 0) {
+                playPauseButton.textContent = "🔄";
+                audioWasEnded = true;
+                words.forEach(w => {
+                    if(parseFloat(w.dataset.time) <= audio.currentTime) {
+                        w.classList.add('read');
+                        w.classList.remove('highlight');
+                    }
+                });
+            }
+        };
+    }
+
+    words.forEach(word => {
+        word.addEventListener("click", function() {
+            if (audioWasEnded) {
+                resetHighlights();
+                audioWasEnded = false;
+            }
+
+            let startTime = parseFloat(this.dataset.time);
+            audio.currentTime = startTime;
+
+            const currentTime = audio.currentTime;
+            words.forEach(w => {
+                let wt = parseFloat(w.dataset.time);
+                let et;
+                let nwt = Infinity;
+                let currentIndex = Array.from(words).indexOf(w);
+                for (let i = currentIndex + 1; i < words.length; i++) {
+                    if (words[i].hasAttribute('data-time')) {
+                        nwt = parseFloat(words[i].dataset.time);
+                        break;
+                    }
+                }
+                if (nwt !== Infinity) { et = nwt; } else { et = wt + 1.0; if (audio.duration && !isNaN(audio.duration)) {et = audio.duration;} }
+
+                if (currentTime >= wt && currentTime < et) {
+                    w.classList.add("highlight"); w.classList.remove("read");
+                } else if (currentTime >= et) {
+                    w.classList.add("read"); w.classList.remove("highlight");
+                } else {
+                    w.classList.remove("highlight"); w.classList.remove("read");
+                }
+            });
+
+            if (audio.paused || audio.ended) {
+                isPaused = false;
+                playPauseButton.textContent = "⏸️";
+                audio.play();
+            } else {
+                isPaused = false;
+                playPauseButton.textContent = "⏸️";
+            }
+        });
+    });
+
+    audio.addEventListener('ended', () => {
+        playPauseButton.textContent = "🔄";
+        isPaused = true;
+        audioWasEnded = true;
+        words.forEach(w => {
+            if (w.classList.contains('highlight')) {
+                w.classList.remove('highlight');
+                w.classList.add('read');
+            } else if (w.hasAttribute('data-time') && parseFloat(w.dataset.time) <= audio.currentTime) {
+                w.classList.add('read');
+            }
+        });
+    });
+
+    audio.addEventListener("play", highlightWords);
+    audio.addEventListener("seeked", highlightWords);
+
+</script>
+</body>
+</html>
